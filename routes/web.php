@@ -11,32 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    
-    $books = [
-        'Harry Potter',
-        'Laravel'
-    ];
+Route::get('/', 'HomeController@index');
 
-    // 方法1
-    return view('welcome', [
-        'books' => $books
-    ]);
+Route::get('/hello', 'HomeController@hello');
 
-    // 方法2
-    return view('welcome')->with([
-        'books' => $books
-    ]);
-    // 方法3
-    return view('welcome')->withBooks($books);
-
-    
-});
-
-Route::get('/hello', function () {
-    return view('hello');
-});
-
-Route::get('/contact', function () {
-    return view('contact');
-});
+Route::get('/contact', 'HomeController@contact');
