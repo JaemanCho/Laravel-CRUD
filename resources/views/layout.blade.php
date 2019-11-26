@@ -8,7 +8,7 @@
 </head>
 <body>
     <ul>
-        <li><a href="/">Wellcome</a></li>
+        <li><a href="/">Welcome</a></li>
         <li><a href="/contact">Contact</a></li>
         <li><a href="/hello">hello</a></li>
     </ul>
