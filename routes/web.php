@@ -36,7 +36,7 @@ Route::get('/projects', 'ProjectController@index');
 //     Route::delete('/{task}', 'TaskController@destroy');   
 // });
 
-Route::resource('task', 'TaskController')->middleware('auth');
+Route::resource('tasks', 'TaskController')->middleware('auth');
 
 Auth::routes();
 
