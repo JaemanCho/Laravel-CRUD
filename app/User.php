@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return auth()->id() == $task->user_id;
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }
