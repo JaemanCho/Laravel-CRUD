@@ -26,4 +26,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function owns(Task $task)
+    {
+        return auth()->id() == $task->user_id;
+    }
 }

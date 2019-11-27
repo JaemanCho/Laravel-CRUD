@@ -9,7 +9,7 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::latest()->get();
+        $tasks = Task::latest()->where('user_id', auth()->id())->get();
 
         return view('tasks.index', [
             'tasks' => $tasks
@@ -28,13 +28,28 @@ class TaskController extends Controller
             'body' => 'required'
         ]);
 
-        $task = Task::create(request(['title', 'body']));
+        $values = request(['title', 'body']);
+        
+        $values['user_id'] = auth()->id();
+
+        $task = Task::create($values);
 
         return redirect('tasks/'.$task->id);
     }
 
     public function show(Task $task)
     {
+        // if (auth()->id() !== $task->user_id) 
+        // {
+        //     abort(403);
+        // }
+
+        // abort_if(auth()->id() !== $task->user_id, 403);
+
+        // abort_if(auth()->user()->owns($task), 403);
+
+        abort_unless(auth()->user()->owns($task), 403);
+
         return view('tasks.show', [
             'task' => $task
         ]);
@@ -42,6 +57,8 @@ class TaskController extends Controller
 
     public function edit(Task $task)
     {
+        abort_unless(auth()->user()->owns($task), 403);
+
         return view('tasks.edit', [
             'task' => $task
         ]);
@@ -49,6 +66,8 @@ class TaskController extends Controller
 
     public function update(Task $task)
     {
+        abort_unless(auth()->user()->owns($task), 403);
+
         request()->validate([
             'title' => 'required',
             'body' => 'required'
@@ -61,6 +80,8 @@ class TaskController extends Controller
 
     public function destroy(Task $task)
     {
+        abort_unless(auth()->user()->owns($task), 403);
+
         $task->delete();
      
         return redirect('tasks');
